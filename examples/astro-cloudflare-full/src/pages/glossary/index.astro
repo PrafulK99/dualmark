@@ -1,0 +1,15 @@
+---
+import { getCollection } from "astro:content";
+const terms = await getCollection("glossary");
+---
+
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8" /><title>Glossary</title></head>
+  <body>
+    <main>
+      <h1>Glossary</h1>
+      <ul>{terms.map((t) => <li><a href={`/glossary/${t.id}`}>{t.data.title ?? t.data.term}</a></li>)}</ul>
+    </main>
+  </body>
+</html>

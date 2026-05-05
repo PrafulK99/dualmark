@@ -1,0 +1,29 @@
+---
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const terms = await getCollection("glossary");
+  return terms.map((term) => ({ params: { slug: term.id }, props: { term } }));
+}
+
+const { term } = Astro.props;
+const { Content } = await render(term);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{term.data.title ?? term.data.term} — Glossary</title>
+  </head>
+  <body>
+    <main>
+      <article>
+        <h1>{term.data.title ?? term.data.term}</h1>
+        <p><em>{term.data.definition}</em></p>
+        <Content />
+      </article>
+      <p><a href="/glossary">← Back to glossary</a></p>
+    </main>
+  </body>
+</html>

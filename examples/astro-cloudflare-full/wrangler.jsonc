@@ -1,0 +1,29 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "dualmark-example-astro-cf",
+  "main": "./worker.ts",
+  "compatibility_date": "2026-05-04",
+  "compatibility_flags": ["nodejs_compat"],
+
+  // Astro static build output is served via the ASSETS binding.
+  // Our wrapper Worker (createAEOWorker) intercepts AI bots and serves
+  // markdown from the same directory; everything else falls through.
+  // run_worker_first=true is REQUIRED so createAEOWorker can intercept every
+  // request (negotiation, bot detection, header injection). Without it, the
+  // Cloudflare runtime serves matching assets directly and skips the Worker.
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": true,
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+
+  // Optional: Analytics Engine for AI bot traffic insights.
+  // Comment out if you don't want to enable it.
+  "analytics_engine_datasets": [
+    { "binding": "AI_AGENT_ANALYTICS", "dataset": "dualmark_ai_events" }
+  ],
+
+  "observability": { "enabled": true }
+}

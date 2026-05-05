@@ -1,0 +1,25 @@
+---
+import { getCollection } from "astro:content";
+const posts = await getCollection("blog");
+const terms = await getCollection("glossary");
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Dualmark on Cloudflare</title>
+    <meta name="description" content="Full-stack Dualmark example deployed to Cloudflare Workers." />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <main>
+      <h1>Dualmark on Cloudflare</h1>
+      <p>Static Astro output + a wrapper Worker = AI bots get markdown at the edge, humans get HTML.</p>
+      <h2>Blog</h2>
+      <ul>{posts.map((p) => <li><a href={`/blog/${p.id}`}>{p.data.title}</a></li>)}</ul>
+      <h2>Glossary</h2>
+      <ul>{terms.map((t) => <li><a href={`/glossary/${t.id}`}>{t.data.title ?? t.data.term}</a></li>)}</ul>
+    </main>
+  </body>
+</html>
