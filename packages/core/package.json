@@ -1,0 +1,46 @@
+{
+  "name": "@dualmark/core",
+  "version": "0.1.0",
+  "description": "Framework-agnostic primitives for AEO infrastructure: content negotiation, AI-bot detection, markdown response, token estimation, composition helpers.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dodopayments/dualmark.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://dualmark.dev",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": ["dist", "README.md", "LICENSE"],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist .turbo"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@vitest/coverage-v8": "^2.1.8",
+    "fast-check": "^3.23.2",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "keywords": ["aeo", "seo", "ai", "llm", "markdown", "content-negotiation", "dualmark"]
+}
