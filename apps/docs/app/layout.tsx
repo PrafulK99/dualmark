@@ -1,18 +1,52 @@
-import "fumadocs-ui/css/neutral.css";
-import "fumadocs-ui/css/preset.css";
+import "./globals.css";
 import { RootProvider } from "fumadocs-ui/provider";
+import { Geist, JetBrains_Mono } from "next/font/google";
 import type { ReactNode } from "react";
 
+const geistSans = Geist({
+  subsets: ["latin"],
+  variable: "--font-geist-sans",
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains-mono",
+  display: "swap",
+});
+
 export const metadata = {
-  title: "Dualmark — open-source AEO infrastructure",
-  description: "Open-source AEO (Answer Engine Optimization) infrastructure. Every page, dual-marked.",
+  title: "Dualmark — AEO infrastructure for marketing sites",
+  description:
+    "Open-source AEO (Answer Engine Optimization) infrastructure. Every page, dual-marked. Same URL, two formats — picked by HTTP content negotiation. Drop into Astro, Cloudflare, or Next.js in 30 seconds.",
+  metadataBase: new URL("https://dualmark.dev"),
+  openGraph: {
+    title: "Dualmark — AEO infrastructure for marketing sites",
+    description:
+      "Your blog ranks #1 on Google. ChatGPT cites your competitor. That's an infrastructure problem. Dualmark fixes it.",
+    url: "https://dualmark.dev",
+    siteName: "Dualmark",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dualmark — AEO infrastructure for marketing sites",
+    description:
+      "Open-source AEO infrastructure. Every page, dual-marked. Drop into Astro, Cloudflare, or Next.js in 30 seconds.",
+  },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-        <RootProvider>{children}</RootProvider>
+    <html
+      lang="en"
+      className={`dark ${geistSans.variable} ${jetbrainsMono.variable}`}
+      suppressHydrationWarning
+    >
+      <body className="min-h-screen bg-[var(--color-bg)] text-[var(--color-fg)] antialiased">
+        <RootProvider theme={{ forcedTheme: "dark", defaultTheme: "dark" }}>
+          {children}
+        </RootProvider>
       </body>
     </html>
   );

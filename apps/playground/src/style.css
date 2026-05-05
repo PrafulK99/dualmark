@@ -1,24 +1,23 @@
 :root {
-  --bg: #fafaf9;
-  --fg: #18181b;
-  --muted: #71717a;
-  --border: #e4e4e7;
-  --primary: #0d9488;
-  --primary-fg: #ffffff;
-  --pass: #16a34a;
-  --fail: #dc2626;
-  --code-bg: #f4f4f5;
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #09090b;
-    --fg: #fafafa;
-    --muted: #a1a1aa;
-    --border: #27272a;
-    --code-bg: #18181b;
-  }
+  color-scheme: dark;
+  --bg: #0a0a0a;
+  --bg-elev-1: #151515;
+  --bg-elev-2: #1c1c1c;
+  --fg: #fafafa;
+  --fg-muted: #a1a1aa;
+  --fg-subtle: #71717a;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
+  --primary: #22d3ee;
+  --primary-strong: #67e8f9;
+  --primary-fg: #0a0a0a;
+  --pass: #4ade80;
+  --fail: #f87171;
+  --code-bg: #151515;
+  font-family:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
 * {
@@ -29,61 +28,98 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--fg);
-  line-height: 1.5;
+  line-height: 1.55;
 }
 
 main {
-  max-width: 880px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 3rem 1.5rem;
+  padding: 2rem 1.25rem 3rem;
+}
+
+@media (min-width: 768px) {
+  main {
+    padding: 3rem 2rem 4rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  main {
+    padding: 4rem 3rem 5rem;
+  }
+}
+
+header {
+  margin-bottom: 2.5rem;
 }
 
 header h1 {
   margin: 0 0 0.5rem;
-  font-size: 2rem;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 600;
   letter-spacing: -0.02em;
 }
 
 header p {
-  color: var(--muted);
-  margin: 0 0 2rem;
+  color: var(--fg-muted);
+  margin: 0;
+  max-width: 60ch;
 }
 
 a {
   color: var(--primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 code {
   background: var(--code-bg);
-  padding: 0.1rem 0.3rem;
-  border-radius: 0.25rem;
-  font-size: 0.9em;
+  border: 1px solid var(--border);
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.3rem;
+  font-size: 0.875em;
+  font-family: ui-monospace, "JetBrains Mono", "SF Mono", Menlo, monospace;
 }
 
 .grid {
   display: grid;
   gap: 1rem;
   grid-template-columns: 1fr;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
 }
 
 label span {
   display: block;
   font-weight: 600;
-  font-size: 0.875rem;
-  margin-bottom: 0.4rem;
+  font-size: 0.8125rem;
+  margin-bottom: 0.5rem;
+  color: var(--fg);
+  letter-spacing: 0.01em;
 }
 
 textarea {
   width: 100%;
-  padding: 0.6rem 0.75rem;
-  font-family: ui-monospace, "SF Mono", Menlo, monospace;
-  font-size: 0.875rem;
-  background: var(--bg);
+  padding: 0.75rem 0.875rem;
+  font-family: ui-monospace, "JetBrains Mono", "SF Mono", Menlo, monospace;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  background: var(--bg-elev-1);
   color: var(--fg);
   border: 1px solid var(--border);
   border-radius: 0.5rem;
   resize: vertical;
+  min-height: 5rem;
+  transition: border-color 150ms ease;
 }
 
 textarea:focus {
@@ -97,78 +133,135 @@ textarea:focus {
   gap: 0.5rem;
   align-items: center;
   margin-bottom: 2rem;
-  font-size: 0.875rem;
-  color: var(--muted);
+  font-size: 0.8125rem;
+  color: var(--fg-muted);
+}
+
+.presets > span {
+  margin-right: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.6875rem;
+  color: var(--fg-subtle);
 }
 
 .presets button {
-  padding: 0.4rem 0.75rem;
-  background: var(--bg);
+  padding: 0.45rem 0.85rem;
+  background: var(--bg-elev-1);
   color: var(--fg);
   border: 1px solid var(--border);
-  border-radius: 0.4rem;
+  border-radius: 0.5rem;
   cursor: pointer;
   font-size: 0.8125rem;
+  font-family: inherit;
+  min-height: 2.25rem;
+  transition: all 150ms ease;
 }
 
-.presets button:hover {
+.presets button:hover,
+.presets button:focus-visible {
   border-color: var(--primary);
-  color: var(--primary);
+  color: var(--primary-strong);
+  outline: none;
 }
 
 .result {
   border: 1px solid var(--border);
   border-radius: 0.75rem;
-  padding: 1.5rem;
-  background: var(--code-bg);
+  padding: 1.25rem;
+  background: var(--bg-elev-1);
+}
+
+@media (min-width: 768px) {
+  .result {
+    padding: 1.75rem;
+  }
 }
 
 .result h2 {
   margin: 0 0 1rem;
-  font-size: 1.25rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 .result .verdict {
   display: inline-block;
-  padding: 0.4rem 1rem;
+  padding: 0.5rem 1.1rem;
   border-radius: 0.5rem;
   font-weight: 600;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
+  font-family: ui-monospace, "JetBrains Mono", monospace;
+  font-size: 0.875rem;
+  letter-spacing: 0.02em;
 }
 
 .verdict.markdown {
-  background: rgba(13, 148, 136, 0.15);
-  color: var(--primary);
+  background: rgba(34, 211, 238, 0.12);
+  color: var(--primary-strong);
+  border: 1px solid rgba(34, 211, 238, 0.3);
 }
 
 .verdict.html {
-  background: rgba(99, 102, 241, 0.15);
-  color: #6366f1;
+  background: rgba(167, 139, 250, 0.12);
+  color: #c4b5fd;
+  border: 1px solid rgba(167, 139, 250, 0.3);
 }
 
 .verdict.notacceptable {
-  background: rgba(220, 38, 38, 0.15);
+  background: rgba(248, 113, 113, 0.12);
   color: var(--fail);
+  border: 1px solid rgba(248, 113, 113, 0.3);
 }
 
 .result table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 1rem;
-  font-size: 0.875rem;
+  margin-top: 0.75rem;
+  font-size: 0.8125rem;
+  font-family: ui-monospace, "JetBrains Mono", monospace;
 }
 
 .result th,
 .result td {
   text-align: left;
-  padding: 0.5rem 0.75rem;
+  padding: 0.55rem 0.75rem;
   border-bottom: 1px solid var(--border);
+  word-break: break-word;
+}
+
+.result tr:last-child th,
+.result tr:last-child td {
+  border-bottom: none;
 }
 
 .result th {
-  color: var(--muted);
-  font-weight: 600;
-  width: 40%;
+  color: var(--fg-subtle);
+  font-weight: 500;
+  width: 35%;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.6875rem;
+}
+
+@media (max-width: 480px) {
+  .result table,
+  .result thead,
+  .result tbody,
+  .result tr,
+  .result th,
+  .result td {
+    display: block;
+  }
+  .result th {
+    width: auto;
+    border-bottom: none;
+    padding-bottom: 0.1rem;
+  }
+  .result td {
+    padding-top: 0.1rem;
+    padding-bottom: 0.75rem;
+  }
 }
 
 .result .pass {
@@ -183,13 +276,17 @@ textarea:focus {
 
 footer {
   margin-top: 3rem;
-  color: var(--muted);
-  font-size: 0.875rem;
+  color: var(--fg-subtle);
+  font-size: 0.8125rem;
   border-top: 1px solid var(--border);
   padding-top: 1.5rem;
 }
 
 footer a {
-  color: var(--muted);
+  color: var(--fg-muted);
   text-decoration: underline;
+}
+
+footer a:hover {
+  color: var(--fg);
 }
