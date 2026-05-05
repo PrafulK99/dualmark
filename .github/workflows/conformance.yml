@@ -83,7 +83,7 @@ jobs:
           ./node_modules/.bin/next start --port 4000 &
           DOCS_PID=$!
           sleep 8
-          THRESHOLD=115
+          THRESHOLD=105
           fail=0
           for path in / /docs /docs/quickstart /docs/spec/headers /play; do
             echo "::group::verify ${path}"

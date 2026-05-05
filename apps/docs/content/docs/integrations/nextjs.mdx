@@ -138,18 +138,28 @@ export async function GET(_req: Request, ctx: { params: Promise<{ path: string[]
   **Production note**: `next start` serves prerendered 404s for unknown slugs (like `.md` suffixes) from cache *before* invoking middleware, which can shadow the rewrite. On Vercel and other production-grade hosts, middleware runs at the edge before any cache layer, so this isn't an issue. For local conformance verification, use `next dev`.
 </Callout>
 
-## Known limitation: `html.vary` recommended check
+## Known limitation: Vercel + Next.js Vary stripping
 
-If you set `Vary: Accept` from `middleware.ts` (as the example above does) and serve **prerendered** HTML pages, Next.js's `base-server` overwrites your `Vary` header with its own internal value (`rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch, Accept-Encoding`) before sending the response. The middleware-set `Link` header survives — but `Vary` does not.
+Next.js's `base-server` overwrites the `Vary` header with its own internal value (`rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch, Accept-Encoding`) on:
 
-This is a Next.js architectural quirk, not a Dualmark bug. The result is that on a prerendered `/posts/<slug>` route you'll lose the `html.vary` recommended check (5 points) and cap at **120/125** instead of 125/125.
+- **Prerendered HTML pages** (`/docs/<slug>`) — costs `html.vary` (recommended, **−5pt**)
+- **Prerendered/cached `.md` route handlers** when deployed to Vercel — costs `md.vary` (required, **−10pt**)
+
+Your middleware-set `Link` header survives. Your `markdownResponse()` body and other AEO headers (`X-Markdown-Tokens`, `X-AEO-Version`, `X-Robots-Tag: noindex`, `X-Content-Type-Options: nosniff`) survive. But `Vary: Accept` does not.
+
+This is a Next.js + Vercel architectural quirk, not a Dualmark bug. The practical impact:
+
+- **Local `next dev`**: 120/125 (only `html.vary` fails — middleware sets `Vary` directly on route handler responses without the prerender layer in the way)
+- **Vercel production**: 110/125 (both `md.vary` and `html.vary` fail because Vercel's edge cache layer strips middleware-set Vary)
+
+Both 110 and 120 are still **Standard conformance (≥80%)**. This is what `dualmark.dev` itself ships with.
 
 **Three options, in order of cost:**
 
-1. **Accept the 5pt loss** — 120/125 is still **Standard conformance (96%)**. The check is `recommended`, not `required`. This is what `dualmark.dev` itself does. (No code change.)
+1. **Accept the 10–15pt loss** — 110/125 is still **Standard (88%)**, well above the 80% threshold. This is what `dualmark.dev` does. No code change. (Recommended.)
 
-2. **Disable prerender on AEO-eligible routes** — add `export const dynamic = "force-dynamic"` to `app/posts/[slug]/page.tsx`. Costs ~50ms TTFB per page and disables Vercel's static caching. Gets you 125/125.
+2. **Disable prerender on AEO-eligible routes** — add `export const dynamic = "force-dynamic"` to `app/posts/[slug]/page.tsx` AND your `.md` route handlers. Costs ~50–100ms TTFB per request and disables Vercel's static cache. Gets you 125/125.
 
-3. **Wrap your Next.js output in a Cloudflare Worker** — deploy via `@dualmark/cloudflare`'s `createAEOWorker`. The worker controls `Vary` end-to-end. Gets you 125/125 + edge bot detection.
+3. **Wrap your Next.js output in a Cloudflare Worker** — deploy via `@dualmark/cloudflare`'s `createAEOWorker`. The worker controls `Vary` end-to-end. Gets you 125/125 + edge bot detection at single-digit-ms TTFB.
 
-For most marketing sites, **option 1 is correct** — the 5pt loss does not change the conformance level (Standard is achieved at 80%+).
+For most marketing sites, **option 1 is correct** — the 15pt loss does not change the conformance level (Standard is achieved at 80%+) and matters far less than the perf and cache-efficiency wins from prerendering.
