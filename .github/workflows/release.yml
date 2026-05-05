@@ -1,11 +1,25 @@
-name: Release
+name: Release (npm publish)
+
+# Publishes @dualmark/* to npm. Triggered ONLY by:
+#   1. A GitHub Release being published (recommended path: draft a release
+#      from the GitHub UI on the Releases page after merging the
+#      "chore: version packages" PR), OR
+#   2. Manual workflow_dispatch (escape hatch for re-publishing a tag).
+#
+# Never runs on a plain push, so a stray commit on main can never publish.
 
 on:
-  push:
-    branches: [main]
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to publish (e.g. v0.1.0). Required for manual runs."
+        required: true
+        type: string
 
 concurrency:
-  group: release-${{ github.workflow }}-${{ github.ref }}
+  group: release-publish
   cancel-in-progress: false
 
 env:
@@ -13,19 +27,19 @@ env:
   CI: true
 
 jobs:
-  release:
+  publish:
     if: github.repository == 'dodopayments/dualmark'
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     permissions:
-      contents: write
-      pull-requests: write
+      contents: read
       id-token: write
 
     steps:
-      - name: Checkout
+      - name: Checkout (tag)
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.release.tag_name || inputs.tag }}
           fetch-depth: 0
 
       - name: Setup pnpm
@@ -50,14 +64,33 @@ jobs:
       - name: Run tests (gate release)
         run: pnpm turbo run test --filter='./packages/*'
 
-      - name: Create Release Pull Request or Publish
-        uses: changesets/action@v1
-        with:
-          publish: pnpm release
-          version: pnpm version-packages
-          commit: "chore: version packages"
-          title: "chore: version packages"
+      - name: Typecheck (gate release)
+        run: pnpm turbo run typecheck --filter='./packages/*'
+
+      - name: Verify tag matches package versions
+        run: |
+          TAG="${{ github.event.release.tag_name || inputs.tag }}"
+          # Strip leading 'v' for comparison
+          TAG_VERSION="${TAG#v}"
+          echo "Release tag: $TAG (normalized: $TAG_VERSION)"
+          # Check that at least one package matches the tag version (linked changesets keep them in sync)
+          MATCH=0
+          for pkg in packages/*/package.json; do
+            PKG_VERSION=$(node -p "require('./$pkg').version")
+            PKG_NAME=$(node -p "require('./$pkg').name")
+            echo "  $PKG_NAME = $PKG_VERSION"
+            if [ "$PKG_VERSION" = "$TAG_VERSION" ]; then
+              MATCH=1
+            fi
+          done
+          if [ "$MATCH" -eq 0 ]; then
+            echo "::error::No package version matches release tag $TAG_VERSION. Did you forget to merge the 'chore: version packages' PR before drafting the release?"
+            exit 1
+          fi
+
+      - name: Publish to npm
+        run: pnpm changeset publish
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_CONFIG_PROVENANCE: true
