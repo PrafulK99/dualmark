@@ -1,9 +1,9 @@
 ---
-"@dualmark/converters": major
-"@dualmark/astro": major
+"@dualmark/converters": minor
+"@dualmark/astro": minor
 ---
 
-**BREAKING**: Generalize converters for any marketing site (no longer fintech-specific).
+**BREAKING (pre-1.0)**: Generalize converters for any marketing site (no longer fintech-specific). Per semver §4, breaking changes are allowed in minor bumps before 1.0.
 
 ### Removed
 
