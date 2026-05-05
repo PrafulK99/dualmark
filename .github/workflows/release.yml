@@ -42,21 +42,10 @@ jobs:
           ref: ${{ github.event.release.tag_name || inputs.tag }}
           fetch-depth: 0
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+      - name: Setup
+        uses: ./.github/actions/setup
         with:
-          version: 10.6.2
-          run_install: false
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: pnpm
           registry-url: https://registry.npmjs.org
-
-      - name: Install
-        run: pnpm install --frozen-lockfile
 
       - name: Build packages
         run: pnpm turbo run build --filter='./packages/*'

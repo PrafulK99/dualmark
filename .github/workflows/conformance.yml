@@ -21,11 +21,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with: { version: 10.6.2 }
-      - uses: actions/setup-node@v4
-        with: { node-version: 22, cache: pnpm }
-      - run: pnpm install --frozen-lockfile
+      - uses: ./.github/actions/setup
       - run: pnpm turbo run build --filter='@dualmark/*'
       - name: Build astro-blog example
         run: pnpm --filter dualmark-example-astro-blog build
@@ -43,11 +39,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with: { version: 10.6.2 }
-      - uses: actions/setup-node@v4
-        with: { node-version: 22, cache: pnpm }
-      - run: pnpm install --frozen-lockfile
+      - uses: ./.github/actions/setup
       - run: pnpm turbo run build --filter='@dualmark/*'
       - name: Build astro-cloudflare-full
         run: pnpm --filter dualmark-example-astro-cloudflare-full build
@@ -65,11 +57,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with: { version: 10.6.2 }
-      - uses: actions/setup-node@v4
-        with: { node-version: 22, cache: pnpm }
-      - run: pnpm install --frozen-lockfile
+      - uses: ./.github/actions/setup
       - run: pnpm turbo run build --filter='@dualmark/*'
       - name: Run nextjs-app-router under next dev
         working-directory: examples/nextjs-app-router
