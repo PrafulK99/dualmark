@@ -1,0 +1,71 @@
+# dualmark-example-nextjs-app-router
+
+Reference implementation of Dualmark on Next.js 15 App Router using `@dualmark/core` directly (no dedicated `@dualmark/nextjs` adapter exists yet).
+
+## Architecture
+
+Next.js doesn't ship an integration package for Dualmark, so this example wires the primitives manually:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ middleware.ts                                               │
+│   - if path ends in .md → rewrite to /md/<path-no-ext>     │
+│   - if AI bot UA OR Accept: text/markdown                   │
+│       → rewrite to /md/<path>                               │
+│   - if Accept rules out html+md → 406                       │
+│   - else (HTML) → next() + Link rel=alternate header        │
+└─────────────────────────────────────────────────────────────┘
+
+app/
+├── page.tsx                  → /              (HTML home)
+├── posts/
+│   ├── page.tsx              → /posts         (HTML)
+│   └── [slug]/page.tsx       → /posts/<slug>  (HTML)
+├── md/[...path]/route.ts     → /md/<*path>    (markdown twin handler;
+│                                              never reached directly,
+│                                              only via middleware rewrite)
+└── llms.txt/route.ts         → /llms.txt
+```
+
+> **Why the `/md/` indirection?** Next.js 15's route type generator and
+> static prerender can't currently express dotted segments like `[slug].md`.
+> A separate `md/` namespace + middleware rewrite is the cleanest pattern
+> that preserves negotiation for both `Accept: text/markdown` and direct
+> `.md` URLs while staying type-safe.
+
+## Run
+
+```bash
+pnpm install
+pnpm dev               # http://localhost:3000 (recommended for verify)
+pnpm build             # production build (uses generateStaticParams)
+pnpm start             # serve production build
+```
+
+## Verify
+
+In one terminal: `pnpm dev`. In another:
+
+```bash
+# As browser → HTML with Link header
+curl -sI http://localhost:3000/posts/hello
+
+# As ChatGPT → markdown (middleware rewrites to /md/posts/hello)
+curl -sI -H "User-Agent: GPTBot/1.0" -H "Accept: text/markdown" http://localhost:3000/posts/hello
+
+# Direct .md → markdown
+curl -sI http://localhost:3000/posts/hello.md
+
+# Conformance
+pnpm verify           # → Score 125/125, exit 0
+```
+
+> **Production note**: `next start` serves prerendered 404s for unknown slugs
+> (like `/posts/hello.md`) from cache *before* invoking middleware, which can
+> shadow the rewrite. On Vercel and other production-grade hosts, middleware
+> runs at the edge before any cache layer, so this isn't an issue. For local
+> conformance verification, use `pnpm dev`.
+
+## License
+
+MIT
