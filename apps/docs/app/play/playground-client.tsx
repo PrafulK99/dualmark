@@ -103,11 +103,38 @@ const LEVEL_DESCRIPTION: Record<Level, string> = {
     "AI agents likely struggle with this site. The fixes are well-scoped — let's go.",
 };
 
+function readUrlParam(search: string): string | null {
+  const raw = new URLSearchParams(search).get("url")?.trim();
+  if (!raw) return null;
+  const normalized = /^https?:\/\//i.test(raw) ? raw : `https://${raw}`;
+  try {
+    new URL(normalized);
+    return normalized;
+  } catch {
+    return null;
+  }
+}
+
+function consumeUrlParam(win: Window): void {
+  const cleanUrl = `${win.location.pathname}${win.location.hash}`;
+  win.history.replaceState({}, "", cleanUrl);
+}
+
 export function PlaygroundClient() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<ScoreResult | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const normalized = readUrlParam(window.location.search);
+    if (!normalized) return;
+    setInput(normalized);
+    runScore(normalized);
+    consumeUrlParam(window);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   async function runScore(url: string) {
     setLoading(true);
