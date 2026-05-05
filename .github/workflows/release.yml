@@ -77,21 +77,20 @@ jobs:
             exit 1
           fi
 
-      - name: Configure npm authentication
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-          echo "registry=https://registry.npmjs.org/" >> ~/.npmrc
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       - name: Publish to npm
         # Uses `bun publish` per package instead of `changeset publish` because
         # changesets delegates to `npm publish` (which does NOT rewrite
         # workspace:* dependencies). bun publish DOES rewrite workspace:* to
         # the actual version at pack time, producing valid tarballs that
-        # external consumers can install. Provenance disabled because the
-        # repo is INTERNAL — flip repo public + add `--provenance` here to
-        # re-enable.
+        # external consumers can install.
+        #
+        # Auth: bun publish reads NPM_CONFIG_TOKEN env var (since bun 1.1.33).
+        # This is the only reliable auth method for bun publish in CI —
+        # writing ~/.npmrc does NOT work because bun looks at NPM_CONFIG_USERCONFIG
+        # path, not ~/.npmrc by default.
+        #
+        # Provenance disabled because the repo is INTERNAL — flip repo public
+        # + add `--provenance` here to re-enable.
         run: |
           set -euo pipefail
           published_count=0
@@ -114,5 +113,4 @@ jobs:
           echo ""
           echo "Published $published_count package(s) to npm at version matching tag."
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_TOKEN: ${{ secrets.NPM_TOKEN }}
