@@ -78,8 +78,10 @@ jobs:
           fi
 
       - name: Publish to npm
+        # Provenance disabled because the repo is INTERNAL.
+        # npm provenance requires a PUBLIC GitHub repo to verify build source.
+        # Re-enable by setting NPM_CONFIG_PROVENANCE: true once the repo is public.
         run: bun run changeset publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_CONFIG_PROVENANCE: true
