@@ -3,12 +3,17 @@
   "version": "0.1.0",
   "description": "Framework-agnostic primitives for AEO infrastructure: content negotiation, AI-bot detection, markdown response, token estimation, composition helpers.",
   "license": "MIT",
+  "author": "Dodo Payments <opensource@dodopayments.com> (https://dodopayments.com)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dodopayments/dualmark.git",
+    "url": "git+https://github.com/dodopayments/dualmark.git",
     "directory": "packages/core"
   },
-  "homepage": "https://dualmark.dev",
+  "bugs": {
+    "url": "https://github.com/dodopayments/dualmark/issues"
+  },
+  "homepage": "https://github.com/dodopayments/dualmark/tree/main/packages/core#readme",
+  "funding": "https://github.com/sponsors/dodopayments",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -42,5 +47,21 @@
     "access": "public",
     "registry": "https://registry.npmjs.org"
   },
-  "keywords": ["aeo", "seo", "ai", "llm", "markdown", "content-negotiation", "dualmark"]
+  "keywords": [
+    "aeo",
+    "answer-engine-optimization",
+    "ai-search",
+    "ai-agents",
+    "llm",
+    "chatgpt",
+    "claude",
+    "perplexity",
+    "markdown",
+    "content-negotiation",
+    "llms-txt",
+    "dualmark"
+  ],
+  "engines": {
+    "node": ">=18.18.0"
+  }
 }

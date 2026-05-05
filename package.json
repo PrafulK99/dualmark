@@ -4,11 +4,26 @@
   "private": true,
   "description": "Open-source AEO (Answer Engine Optimization) infrastructure — every page, dual-marked.",
   "license": "MIT",
+  "author": "Dodo Payments <opensource@dodopayments.com> (https://dodopayments.com)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dodopayments/dualmark.git"
+    "url": "git+https://github.com/dodopayments/dualmark.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dodopayments/dualmark/issues"
   },
   "homepage": "https://dualmark.dev",
+  "funding": "https://github.com/sponsors/dodopayments",
+  "keywords": [
+    "aeo",
+    "answer-engine-optimization",
+    "ai-search",
+    "llm",
+    "markdown",
+    "content-negotiation",
+    "dualmark",
+    "monorepo"
+  ],
   "packageManager": "pnpm@10.6.2",
   "engines": {
     "node": ">=18.18.0"

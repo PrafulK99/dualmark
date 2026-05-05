@@ -1,14 +1,19 @@
 {
   "name": "@dualmark/converters",
   "version": "0.1.0",
-  "description": "11 production-tested converter factories (blog, glossary, tax, country, currency, payment-method, case-study, compare, tool, video, legal) for the Dualmark AEO framework.",
+  "description": "12 production-tested markdown converter factories (blog, glossary, tax, country, currency, payment-method, case-study, compare, tool, video, legal, product) for the Dualmark AEO framework.",
   "license": "MIT",
+  "author": "Dodo Payments <opensource@dodopayments.com> (https://dodopayments.com)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dodopayments/dualmark.git",
+    "url": "git+https://github.com/dodopayments/dualmark.git",
     "directory": "packages/converters"
   },
-  "homepage": "https://dualmark.dev",
+  "bugs": {
+    "url": "https://github.com/dodopayments/dualmark/issues"
+  },
+  "homepage": "https://github.com/dodopayments/dualmark/tree/main/packages/converters#readme",
+  "funding": "https://github.com/sponsors/dodopayments",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -42,5 +47,17 @@
     "access": "public",
     "registry": "https://registry.npmjs.org"
   },
-  "keywords": ["aeo", "markdown", "converter", "dualmark"]
+  "keywords": [
+    "aeo",
+    "answer-engine-optimization",
+    "markdown",
+    "converter",
+    "blog",
+    "glossary",
+    "pseo",
+    "dualmark"
+  ],
+  "engines": {
+    "node": ">=18.18.0"
+  }
 }

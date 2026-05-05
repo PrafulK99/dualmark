@@ -3,12 +3,17 @@
   "version": "0.1.0",
   "description": "Cloudflare Workers edge adapter for the Dualmark AEO framework. Wraps any upstream Worker and transparently serves markdown to AI bots.",
   "license": "MIT",
+  "author": "Dodo Payments <opensource@dodopayments.com> (https://dodopayments.com)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dodopayments/dualmark.git",
+    "url": "git+https://github.com/dodopayments/dualmark.git",
     "directory": "packages/cloudflare"
   },
-  "homepage": "https://dualmark.dev",
+  "bugs": {
+    "url": "https://github.com/dodopayments/dualmark/issues"
+  },
+  "homepage": "https://github.com/dodopayments/dualmark/tree/main/packages/cloudflare#readme",
+  "funding": "https://github.com/sponsors/dodopayments",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -43,5 +48,19 @@
     "access": "public",
     "registry": "https://registry.npmjs.org"
   },
-  "keywords": ["aeo", "cloudflare", "workers", "edge", "ai-agents", "dualmark"]
+  "keywords": [
+    "aeo",
+    "answer-engine-optimization",
+    "cloudflare",
+    "cloudflare-workers",
+    "workers",
+    "edge",
+    "ai-agents",
+    "ai-search",
+    "wrangler",
+    "dualmark"
+  ],
+  "engines": {
+    "node": ">=18.18.0"
+  }
 }
