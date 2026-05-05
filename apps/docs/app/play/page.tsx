@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { PlaygroundClient } from "./playground-client";
 
 export const metadata: Metadata = {
-  title: "Playground — Dualmark",
+  title: "Score your site — Dualmark",
   description:
-    "Live tester for the Dualmark content negotiation algorithm. Paste an Accept header + User-Agent, see how @dualmark/core would route it.",
+    "Free AI agent readiness score. Paste any URL, get a 0–125 conformance score against the AEO Spec v1.0. See exactly what to fix to be cited by ChatGPT, Claude, and Perplexity.",
 };
 
 export default function PlayPage() {
