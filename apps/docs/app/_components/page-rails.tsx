@@ -4,7 +4,7 @@ export function PageRails() {
   return (
     <div
       aria-hidden
-      className="pointer-events-none absolute inset-0 z-0 select-none"
+      className="pointer-events-none absolute inset-0 z-10 select-none"
     >
       <div
         className="absolute top-0 bottom-0 w-px bg-[var(--color-border-strong)]"

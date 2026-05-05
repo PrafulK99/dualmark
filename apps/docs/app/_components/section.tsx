@@ -4,15 +4,19 @@ export function Section({
   children,
   className = "",
   id,
+  divider = true,
 }: {
   children: ReactNode;
   className?: string;
   id?: string;
+  divider?: boolean;
 }) {
   return (
     <section
       id={id}
-      className={`relative mx-auto w-full max-w-7xl px-6 py-24 md:px-8 ${className}`}
+      className={`relative mx-auto w-full max-w-7xl px-6 py-24 md:px-8 ${
+        divider ? "border-t border-[var(--color-border)]" : ""
+      } ${className}`}
     >
       {children}
     </section>

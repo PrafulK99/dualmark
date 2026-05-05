@@ -16,8 +16,8 @@ export function UnifiedNav() {
   if (pathname.startsWith("/docs")) return null;
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-[var(--color-border)] bg-[var(--color-bg)]/75 backdrop-blur-xl">
-      <div className="mx-auto flex h-14 w-full max-w-7xl items-center justify-between px-5 md:px-8">
+    <header className="sticky top-0 z-50 w-full bg-[var(--color-bg)]/75 backdrop-blur-xl">
+      <div className="mx-auto flex h-14 w-full max-w-7xl items-center justify-between border-b border-[var(--color-border)] px-5 md:px-8">
         <Link
           href="/"
           className="-ml-1 inline-flex items-center rounded-md px-1 py-0.5 transition-opacity hover:opacity-80"

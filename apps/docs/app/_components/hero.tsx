@@ -4,7 +4,7 @@ import { InstallCommandClient } from "./install-command";
 
 export function Hero() {
   return (
-    <section className="relative isolate border-b border-[var(--color-border)]">
+    <section className="relative isolate">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-10 mx-auto w-full max-w-7xl overflow-hidden"
