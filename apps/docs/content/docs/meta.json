@@ -1,17 +1,16 @@
 {
-  "title": "Documentation",
   "pages": [
     "index",
-    "---Get started---",
+    "---[Rocket]Get started---",
     "quickstart",
     "concepts",
-    "---Integrate---",
-    "integrations",
-    "---API reference---",
-    "packages",
-    "---Conformance---",
-    "conformance",
-    "---Spec---",
-    "spec"
+    "---[Plug]Integrate---",
+    "...integrations",
+    "---[Package]API reference---",
+    "...packages",
+    "---[ShieldCheck]Conformance---",
+    "...conformance",
+    "---[BookText]Spec---",
+    "...spec"
   ]
 }

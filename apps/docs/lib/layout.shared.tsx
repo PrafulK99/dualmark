@@ -8,9 +8,7 @@ export function baseOptions(): BaseLayoutProps {
     },
     githubUrl: "https://github.com/dodopayments/dualmark",
     links: [
-      { text: "Quickstart", url: "/docs/quickstart", active: "nested-url" },
-      { text: "Spec", url: "/docs/spec/overview", active: "nested-url" },
-      { text: "Playground", url: "/play", active: "nested-url" },
+      { text: "Playground", url: "/play", active: "nested-url", secondary: true },
     ],
   };
 }

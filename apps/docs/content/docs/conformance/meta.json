@@ -1,4 +1,4 @@
 {
   "title": "Conformance",
-  "pages": ["cli", "scoring"]
+  "pages": ["index", "cli", "scoring"]
 }
