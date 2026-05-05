@@ -1,13 +1,15 @@
 import Link from "next/link";
+import { BeamsBackground } from "./beams-bg";
 import { CodeBlock, Tok } from "./code-block";
+import { InstallCommandClient } from "./install-command";
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden border-b border-[var(--color-border)]">
-      <div className="absolute inset-0 bg-grid mask-radial-fade opacity-60" />
-      <div className="absolute left-1/2 top-0 -z-10 h-[640px] w-[1200px] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,oklch(0.78_0.14_195/0.18),transparent_60%)]" />
+    <section className="relative isolate overflow-hidden border-b border-[var(--color-border)]">
+      <BeamsBackground />
+      <div className="absolute inset-0 -z-10 bg-grid mask-radial-fade opacity-30" />
 
-      <div className="relative mx-auto flex w-full max-w-7xl flex-col items-center px-6 pb-24 pt-20 md:px-8 md:pb-32 md:pt-28">
+      <div className="relative mx-auto flex w-full max-w-7xl flex-col items-center px-6 pb-24 pt-16 md:px-8 md:pb-32 md:pt-24">
         <Link
           href="https://github.com/dodopayments/dualmark"
           className="group mb-8 inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-elev-1)]/70 px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--color-fg-muted)] backdrop-blur transition-colors hover:border-[var(--color-accent)]/40 hover:text-[var(--color-accent)]"
@@ -20,17 +22,16 @@ export function Hero() {
         </Link>
 
         <h1 className="max-w-4xl text-balance text-center text-5xl font-semibold tracking-tight text-[var(--color-fg)] md:text-7xl">
-          The AEO infrastructure your{" "}
+          AEO infrastructure{" "}
           <span className="bg-gradient-to-r from-[var(--color-accent-strong)] via-[var(--color-accent)] to-[oklch(0.78_0.14_280)] bg-clip-text text-transparent">
-            marketing site
-          </span>{" "}
-          is missing.
+            built for developers.
+          </span>
         </h1>
 
         <p className="mt-6 max-w-2xl text-pretty text-center text-lg text-[var(--color-fg-muted)] md:text-xl">
-          Your blog ranks #1 on Google. ChatGPT cites your competitor.
+          One config. One spec. Every page gets a markdown twin for AI agents.
           <br className="hidden md:inline" />
-          That's not a content problem — it's an infrastructure problem.
+          Drop into your stack in 30 seconds. Verify with one command.
         </p>
 
         <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row">
@@ -118,16 +119,5 @@ export function Hero() {
 }
 
 function InstallCommand() {
-  return (
-    <div className="inline-flex h-11 items-center gap-3 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-elev-1)] pl-4 pr-2 font-mono text-sm text-[var(--color-fg-muted)]">
-      <span className="text-[var(--color-fg-subtle)]">$</span>
-      <span>
-        <span className="text-[var(--color-accent)]">pnpm</span> add{" "}
-        <span className="text-[var(--color-fg)]">@dualmark/astro</span>
-      </span>
-      <span className="ml-2 inline-flex h-7 items-center rounded-md border border-[var(--color-border)] px-2 font-sans text-[11px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
-        copy
-      </span>
-    </div>
-  );
+  return <InstallCommandClient />;
 }

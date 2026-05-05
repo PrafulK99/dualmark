@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Wordmark } from "./brand-mark";
 import { Section } from "./section";
 
 export function CTA() {
@@ -69,43 +70,84 @@ export function CTA() {
 
 function Footer() {
   return (
-    <footer className="mt-20 flex flex-col items-center justify-between gap-6 border-t border-[var(--color-border)] pt-10 text-sm text-[var(--color-fg-subtle)] sm:flex-row">
-      <div className="flex items-center gap-3">
-        <span className="font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-fg)]">
-          Dualmark
-        </span>
-        <span className="text-[var(--color-fg-subtle)]">·</span>
-        <span>
-          Built at{" "}
-          <Link
-            href="https://dodopayments.com"
-            className="text-[var(--color-fg-muted)] hover:text-[var(--color-accent)]"
-          >
-            Dodo Payments
+    <footer className="mt-20 flex flex-col gap-8 border-t border-[var(--color-border)] pt-12 text-sm text-[var(--color-fg-subtle)]">
+      <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+        <div className="col-span-2 flex flex-col gap-3 md:col-span-2">
+          <Link href="/" className="inline-flex w-fit">
+            <Wordmark size={20} />
           </Link>
-        </span>
+          <p className="max-w-xs text-sm text-[var(--color-fg-muted)]">
+            AEO infrastructure for marketing sites. Open source. Public spec.
+          </p>
+          <p className="text-xs text-[var(--color-fg-subtle)]">
+            Built at{" "}
+            <Link
+              href="https://dodopayments.com"
+              className="text-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
+            >
+              Dodo Payments
+            </Link>
+            .
+          </p>
+        </div>
+        <FooterColumn
+          title="Product"
+          links={[
+            { href: "/docs/quickstart", label: "Quickstart" },
+            { href: "/docs/integrations/astro", label: "Astro" },
+            { href: "/docs/integrations/cloudflare", label: "Cloudflare" },
+            { href: "/docs/integrations/nextjs", label: "Next.js" },
+            { href: "/play", label: "Playground" },
+          ]}
+        />
+        <FooterColumn
+          title="Resources"
+          links={[
+            { href: "/docs/spec/overview", label: "AEO Spec" },
+            { href: "/docs/conformance", label: "Conformance" },
+            { href: "https://github.com/dodopayments/dualmark", label: "GitHub" },
+            {
+              href: "https://github.com/dodopayments/dualmark/blob/main/LICENSE",
+              label: "MIT License",
+            },
+          ]}
+        />
       </div>
-      <div className="flex items-center gap-5">
-        <Link href="/docs" className="hover:text-[var(--color-fg)]">
-          Docs
-        </Link>
-        <Link href="/docs/spec" className="hover:text-[var(--color-fg)]">
-          Spec
-        </Link>
-        <Link
-          href="https://github.com/dodopayments/dualmark"
-          className="hover:text-[var(--color-fg)]"
-        >
-          GitHub
-        </Link>
-        <Link
-          href="https://github.com/dodopayments/dualmark/blob/main/LICENSE"
-          className="hover:text-[var(--color-fg)]"
-        >
-          MIT
-        </Link>
+      <div className="flex flex-col items-start justify-between gap-3 border-t border-[var(--color-border)] pt-6 text-xs text-[var(--color-fg-subtle)] md:flex-row md:items-center">
+        <span>© {new Date().getFullYear()} Dualmark contributors.</span>
+        <span className="font-mono">
+          Spec v1.0 · MIT · pre-1.0 (APIs may change in patch releases)
+        </span>
       </div>
     </footer>
+  );
+}
+
+function FooterColumn({
+  title,
+  links,
+}: {
+  title: string;
+  links: { href: string; label: string }[];
+}) {
+  return (
+    <div className="flex flex-col gap-3">
+      <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--color-fg)]">
+        {title}
+      </span>
+      <ul className="flex flex-col gap-2">
+        {links.map((l) => (
+          <li key={l.href}>
+            <Link
+              href={l.href}
+              className="text-sm text-[var(--color-fg-muted)] transition-colors hover:text-[var(--color-fg)]"
+            >
+              {l.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 

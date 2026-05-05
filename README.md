@@ -202,7 +202,7 @@ Plus:
 
 - [**`spec/`**](./spec) — the **AEO Specification v1.0**. Public, framework-agnostic, RFC-2119-compliant. Implement it in Go, Rust, PHP, Ruby — your call.
 - [**`apps/docs/`**](./apps/docs) — Fumadocs site at [dualmark.dev](https://dualmark.dev)
-- [**`apps/playground/`**](./apps/playground) — paste an Accept header + UA, see how it negotiates. Live in your browser.
+- [**`apps/docs/app/play`**](./apps/docs/app/play) — interactive Accept-header + UA tester. Live at [dualmark.dev/play](https://dualmark.dev/play).
 - [**`examples/`**](./examples) — three end-to-end working examples (Astro, Astro+Cloudflare, Next.js).
 
 ---
@@ -220,7 +220,7 @@ Plus:
 | `examples/astro-cloudflare-full` | **125/125 perfect** under `wrangler dev` (full negotiation) |
 | `examples/nextjs-app-router` | **120/125** under `next dev` |
 | `apps/docs` | 26 routes prerendered, all serve 200 |
-| `apps/playground` | Vite build clean, all interactive elements render |
+| `/play` route | Live at dualmark.dev/play, integrated into the docs app |
 
 ```bash
 pnpm install

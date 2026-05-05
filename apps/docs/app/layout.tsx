@@ -2,6 +2,7 @@ import "./globals.css";
 import { RootProvider } from "fumadocs-ui/provider";
 import { Geist, JetBrains_Mono } from "next/font/google";
 import type { ReactNode } from "react";
+import { UnifiedNav } from "./_components/unified-nav";
 
 const geistSans = Geist({
   subsets: ["latin"],
@@ -45,6 +46,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     >
       <body className="min-h-screen bg-[var(--color-bg)] text-[var(--color-fg)] antialiased">
         <RootProvider theme={{ forcedTheme: "dark", defaultTheme: "dark" }}>
+          <UnifiedNav />
           {children}
         </RootProvider>
       </body>
