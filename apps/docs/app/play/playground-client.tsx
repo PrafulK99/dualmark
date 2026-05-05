@@ -30,10 +30,12 @@ interface ScoreResult {
 }
 
 const EXAMPLES = [
+  { label: "dodopayments.com", url: "https://dodopayments.com" },
+  { label: "developers.cloudflare.com", url: "https://developers.cloudflare.com" },
+  { label: "docs.anthropic.com", url: "https://docs.anthropic.com/en/docs/get-started" },
   { label: "vercel.com", url: "https://vercel.com" },
   { label: "stripe.com", url: "https://stripe.com" },
   { label: "linear.app", url: "https://linear.app" },
-  { label: "anthropic.com", url: "https://anthropic.com" },
 ];
 
 const LEVEL_TONE: Record<Level, { color: string; bg: string; border: string }> =
