@@ -1,0 +1,4 @@
+* @dodopayments/dualmark-maintainers
+
+/spec/             @dodopayments/dualmark-spec-editors
+/packages/core/    @dodopayments/dualmark-spec-editors
