@@ -1,5 +1,17 @@
 # Dualmark
 
+<p align="left">
+  <a href="https://www.npmjs.com/package/@dualmark/core">
+    <img src="https://img.shields.io/npm/v/@dualmark/core?label=npm&color=blue" alt="npm version" />
+  </a>
+  <a href="https://github.com/dodopayments/dualmark/blob/main/LICENSE">
+    <img src="https://img.shields.io/badge/license-Apache%202.0-green" alt="License" />
+  </a>
+  <a href="https://discord.gg/bYqAp4ayYh">
+    <img src="https://img.shields.io/discord/1305511580854779984?label=Join%20Discord&logo=discord" alt="Join Discord" />
+  </a>
+</p>
+
 > The AEO infrastructure your marketing site is missing.
 
 Your blog ranks #1 on Google. ChatGPT cites your competitor.
