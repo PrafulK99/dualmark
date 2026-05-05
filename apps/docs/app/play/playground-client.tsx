@@ -9,6 +9,7 @@ import {
   useState,
 } from "react";
 import { BrandMark } from "../_components/brand-mark";
+import { PageRails } from "../_components/page-rails";
 
 type Severity = "required" | "recommended";
 type Level = "Advanced" | "Standard" | "Basic" | "Below Basic";
@@ -167,10 +168,16 @@ export function PlaygroundClient() {
 
   return (
     <main className="relative isolate min-h-[calc(100vh-3.5rem)]">
-      <div className="absolute inset-x-0 top-0 -z-10 h-[520px] bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(198,254,30,0.16),transparent_70%)]" />
-      <div className="absolute inset-0 -z-10 bg-grid mask-radial-fade opacity-25" />
+      <PageRails />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 mx-auto w-full max-w-7xl overflow-hidden"
+      >
+        <div className="absolute inset-x-0 top-0 h-[520px] bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(198,254,30,0.16),transparent_70%)]" />
+        <div className="absolute inset-0 bg-grid mask-radial-fade opacity-25" />
+      </div>
 
-      <div className="mx-auto w-full max-w-5xl px-5 py-10 md:px-8 md:py-16">
+      <div className="mx-auto w-full max-w-7xl px-6 py-10 md:px-8 md:py-16">
         <div className="mb-10 flex flex-col items-start gap-3">
           <span className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-elev-1)] px-3 py-1 font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--color-accent)]">
             <span className="size-1.5 rounded-full bg-[var(--color-accent)]" />
