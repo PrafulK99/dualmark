@@ -11,7 +11,7 @@ Built and battle-tested at [Dodo Payments](https://dodopayments.com).
 | Package | Purpose |
 |---|---|
 | [`@dualmark/core`](./packages/core) | Framework-agnostic primitives — content negotiation, AI-bot detection, markdown response, token estimation, composition helpers |
-| [`@dualmark/converters`](./packages/converters) | 11 production-tested converter factories (blog, glossary, tax, country, currency, payment-method, case-study, compare, tool, video, legal) |
+| [`@dualmark/converters`](./packages/converters) | 12 production-tested converter factories (blog, glossary, tax, country, currency, payment-method, case-study, compare, tool, video, legal, product) |
 | [`@dualmark/astro`](./packages/astro) | Astro integration — auto-generates `.md` endpoints from collection config, ships middleware for `Link rel="alternate"` headers, generates `llms.txt` |
 | [`@dualmark/cloudflare`](./packages/cloudflare) | Cloudflare Workers edge adapter — wraps any upstream Worker, transparently serves markdown to AI bots, integrates Analytics Engine |
 | [`@dualmark/cli`](./packages/cli) | `dualmark verify <url>` — conformance test runner against the AEO Spec |
@@ -19,7 +19,7 @@ Built and battle-tested at [Dodo Payments](https://dodopayments.com).
 Plus:
 
 - [`spec/`](./spec) — the **AEO Specification** (HTTP content negotiation, headers contract, AI bot registry, discovery)
-- [`apps/docs/`](./apps/docs) — Mintlify docs at [dualmark.dev](https://dualmark.dev)
+- [`apps/docs/`](./apps/docs) — Fumadocs site at [dualmark.dev](https://dualmark.dev)
 - [`apps/playground/`](./apps/playground) — paste an Accept header, see how it negotiates
 - [`examples/`](./examples) — astro-blog, astro-cloudflare-full, nextjs-app-router
 
@@ -40,7 +40,7 @@ export default defineConfig({
     dualmark({
       siteUrl: "https://example.com",
       collections: {
-        blog: { converter: "blog", route: "blog" },
+        blog: { converter: "blog" },
       },
       llmsTxt: { enabled: true },
     }),
@@ -73,6 +73,28 @@ pnpm lint
 ## License
 
 MIT — see [LICENSE](./LICENSE).
+
+## Verified end-to-end
+
+| Surface | Status |
+|---|---|
+| `@dualmark/core` | 156 tests pass |
+| `@dualmark/converters` | 19 tests pass |
+| `@dualmark/cloudflare` | 23 tests pass |
+| `@dualmark/cli` | 15 tests pass |
+| `@dualmark/astro` | 35 tests pass |
+| `examples/astro-blog` | 80/80 under `astro dev` (skip-negotiation) |
+| `examples/astro-cloudflare-full` | **125/125** under `wrangler dev` (full negotiation) |
+| `examples/nextjs-app-router` | 120/125 under `next dev` |
+| `apps/docs` | 26 routes prerendered, all serve 200 |
+| `apps/playground` | Vite build succeeds, all interactive elements render |
+
+Run it yourself:
+
+```bash
+pnpm install
+pnpm build && pnpm test && pnpm typecheck   # 248 tests across 5 packages
+```
 
 ## Status
 
