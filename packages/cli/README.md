@@ -21,17 +21,19 @@ dualmark verify https://example.com --timeout 5000
 
 ### Flags
 
-| Flag | Effect |
-|---|---|
-| `--json` | Emit machine-readable JSON instead of human-readable text |
+| Flag                 | Effect                                                                                                                                                                 |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--json`             | Emit machine-readable JSON instead of human-readable text                                                                                                              |
 | `--skip-negotiation` | Skip Accept-header / Link-header / 406 checks. Use against sites that serve markdown only at `.md` URLs without runtime content negotiation (e.g. static-only deploys) |
-| `--timeout <ms>` | Per-request timeout (default 10000) |
+| `--timeout <ms>`     | Per-request timeout (default 10000)                                                                                                                                    |
 
 ### Exit codes
 
 - `0` — pass (score ≥ 80% of max)
 - `1` — fail (below threshold)
 - `2` — CLI usage error
+
+For GitHub Actions, GitLab CI, and Docker examples, see the [Use in CI guide](https://dualmark.dev/docs/ci).
 
 ## Programmatic usage
 
